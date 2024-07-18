@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Model Trainer</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>NLP Model Trainer</h1>
+    
+    <h2>Train the Model</h2>
+    <form id="trainForm">
+        <label for="trainText">Text:</label><br>
+        <textarea id="trainText" name="text" rows="4" cols="50"></textarea><br>
+        <label for="entities">Entities (format: start:end:label, comma-separated):</label><br>
+        <input type="text" id="entities" name="entities" size="50"><br>
+        <input type="submit" value="Train">
+    </form>
+    <div id="trainResult"></div>
+
+    <h2>Test the Model</h2>
+    <form id="testForm">
+        <label for="testText">Text:</label><br>
+        <textarea id="testText" name="text" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Test">
+    </form>
+    <div id="testResult"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#trainForm').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/train',
+                    type: 'post',
+                    data: $('#trainForm').serialize(),
+                    success: function(response) {
+                        $('#trainResult').text(response.message);
+                    }
+                });
+            });
+
+            $('#testForm').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/test',
+                    type: 'post',
+                    data: $('#testForm').serialize(),
+                    success: function(response) {
+                        let result = 'Entities: ' + JSON.stringify(response.entities) + '<br>';
+                        result += 'Intent: ' + response.intent;
+                        $('#testResult').html(result);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
