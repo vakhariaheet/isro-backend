@@ -1,5 +1,5 @@
 # VocMaps API
-
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">]()
 
 
 
@@ -9,12 +9,11 @@
     method: POST
     url: /login
     body:
-    ```json
-    {
-        username:string;
-        password:string;
-    }
-    ```
+    | Field | Type | Description |
+    |-------|------|-------------|
+    | email | string | User's email |
+    | password | string | User's password |
+
     response:
     1. Successful Login
     ```json
@@ -70,5 +69,6 @@
         }
     }
     ```
+3. Forgot password
 
 
