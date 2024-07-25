@@ -4,7 +4,7 @@ from typing import Literal, Any, Union
 
 
 
-def send_response(status:Literal[200, 201, 400, 401, 403, 404], message:str, data:Any=None):
+def send_response(status:Literal[200, 201, 400, 401, 403, 404], message:str="", data:Any=None):
     """
     Send a JSON response with the given status, message, and data.
 
@@ -66,7 +66,7 @@ def send_response(status:Literal[200, 201, 400, 401, 403, 404], message:str, dat
         case _:
             return jsonify({
                 "isSuccess": False,
-                "message": "An error occurred",
-                "data": None
+                "message": message if message else "Unknown Status Code",
+                "data": data
             })
         
